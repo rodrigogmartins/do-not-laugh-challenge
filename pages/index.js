@@ -1,24 +1,25 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button, Card } from '../components'
 
 export default function Home() {
-  const [joke, setJoke] = useState({})
-  const [isLoading, setLoading] = useState(false)
+  const shouldGetInitialJoke = useRef(true)
+  const [joke, setJoke] = useState(null)
 
   const getJoke = () => {
     fetch('/api/jokes')
       .then((res) => res.json())
       .then((data) => {
         setJoke(data)
-        setLoading(false)
       })
   }
 
   useEffect(() => {
-    setLoading(true)
-    getJoke()
+    if (shouldGetInitialJoke.current) {
+      shouldGetInitialJoke.current = false
+      getJoke()
+    }
   }, [])
 
   return (
@@ -31,13 +32,13 @@ export default function Home() {
 
       <h1 className={styles.title}>Don't laugh challenge</h1>
 
-      <Card>
+      {joke && <Card>
         <p className={styles.description}>
           {joke.text}
         </p>
 
         <Button onClick={getJoke}>Next Joke</Button>
-      </Card>
+      </Card>}
     </div>
   )
 }
