@@ -25,12 +25,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Don't Laugh Challenge</title>
+        <title>{`Don't Laugh Challenge`}</title>
         <meta name="description" content="Don't Laugh Challenge" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className={styles.title}>Don't Laugh Challenge</h1>
+      <h1 className={styles.title}>{`Don't Laugh Challenge`}</h1>
 
       {joke && <Card>
         <p className={styles.description}>
